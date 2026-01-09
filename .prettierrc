@@ -1,0 +1,27 @@
+{
+    "tabWidth": 4,
+    "useTabs": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "semi": true,
+    "trailingComma": "es5",
+    "arrowParens": "always",
+    "bracketSameLine": true,
+
+    "overrides": [
+        {
+            "files": ["*.jsx", "*.tsx"],
+            "options": {
+                "printWidth": 140,
+                "singleAttributePerLine": true
+            }
+        },
+        {
+            "files": ["*.html"],
+            "options": {
+                "singleAttributePerLine": false,
+                "printWidth": 140
+            }
+        }
+    ]
+}
