@@ -5,17 +5,21 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { LuAlignLeft } from 'react-icons/lu';
-import Link from 'next/link';
-import { Button } from '../ui/button';
-
 // links for dropdown provided from a separate file
 import { links } from '@/utils/links';
+
+import { LuAlignLeft } from 'react-icons/lu';
 import UserIcon from './UserIcon';
-import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
+import Link from 'next/link';
+import { Button } from '../ui/button';
 import SignOutLink from './SignOutLink';
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 
 const LinksDropdown = () => {
+    const { userId } = auth();
+    const isAdmin = userId === process.env.ADMIN_USER_ID;
+
     return (
         <DropdownMenu>
             {/* icon that triggers */}
@@ -54,6 +58,9 @@ const LinksDropdown = () => {
                 {/* LINKS TO DISPLAY WHEN SIGNED IN */}
                 <SignedIn>
                     {links.map((link) => {
+                        // if it is not ADMIN => he cannot see the Dashboard tab
+                        if (link.label === 'dashboard' && !isAdmin) return null;
+
                         return (
                             <DropdownMenuItem key={link.href}>
                                 <Link
